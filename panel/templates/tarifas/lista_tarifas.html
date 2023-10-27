@@ -1,0 +1,101 @@
+{% extends 'index_master.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<style>
+    .table th {
+        border-top: none !important;
+    }
+
+    .texto-grande {
+        font-size: 18px;
+    }
+
+    .table-container {
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 5px;
+        background-color: #fff;
+    }
+
+    .content-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* Estilo para los botones */
+    .btn-container {
+        display: flex;
+        gap: 10px; /* Espacio entre botones */
+    }
+
+    /* Estilo para la tabla */
+    .table-container table {
+        width: 100%;
+        margin-top: 10px; /* Espacio entre el formulario y la tabla */
+    }
+</style>
+<div class="right_col" role="main">
+    <div class="content-header">
+        <h1>Lista de tarifas</h1>
+        <div class="btn-container">
+            <a href="{% url 'agregar_tarifa' %}" class="btn btn-success">
+                <i class="fas fa-plus"></i> Agregar Tarifa
+            </a>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col" class="texto-grande">Nombre</th>
+                    <th scope="col" class="texto-grande">Monto</th>
+                    <th scope="col" class="texto-grande">Descripción</th>
+                    <th scope="col" class="texto-grande">Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tarifa in tarifas %}
+                <tr>
+                    <td class="texto-grande">{{ tarifa.nombre }}</td>
+                    <td class="texto-grande">${{ tarifa.monto }}</td>
+                    <td class="texto-grande">{{ tarifa.descripcion }}</td>
+                    <td>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal_{{ tarifa.id }}">
+                            Eliminar
+                        </button>
+                    </td>
+                </tr>
+
+                <!-- Modal para confirmar la eliminación de cada tarifa -->
+                <div class="modal fade" id="deleteModal_{{ tarifa.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteModalLabel">Confirmar eliminación</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ¿Estás seguro de que deseas eliminar esta tarifa?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <form action="{% url 'eliminar_tarifa' tarifa.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </tbody>
+        </table>
+</div>
+{% endblock %}
+

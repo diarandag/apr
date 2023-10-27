@@ -1,0 +1,154 @@
+{% extends '../index_master.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<style>
+    .table th {
+        border-top: none !important;
+    }
+
+    .texto-grande {
+        font-size: 18px;
+    }
+
+    .table-container {
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 5px;
+        background-color: #fff;
+    }
+
+    .content-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* Estilo para los botones */
+    .btn-container {
+        display: flex;
+        gap: 10px; /* Espacio entre botones */
+    }
+
+    /* Estilo para la tabla */
+    .table-container table {
+        width: 100%;
+        margin-top: 10px; /* Espacio entre el formulario y la tabla */
+    }
+</style>
+
+<div class="right_col" role="main">
+    <div class="content-header">
+        <h1>Lista de clientes</h1>
+    </div>
+    <br>
+    <div class="table-container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="filter-bar">
+                    <form method="post" class="filter-form">
+                        {% csrf_token %}
+                        <div class="filter-input">
+                            <label for="rut">Filtrar por Rut:</label>
+                            <div class="input-group">
+                                <input type="text" name="rut" id="rut" class="form-control" style="max-width: 150px;" placeholder="Rut">
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary" style="margin-left: 10px;">Filtrar</button>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6 text-right align-self-center">
+                {% if user.usuario_tipo == 'administrador' %}
+                    <a href="{% url 'agregar' %}" class="btn btn-success" style="width: 200px;">
+                        <i class="fas fa-user-plus"></i> Agregar Cliente
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col" class="texto-grande">N° de medidor</th>
+                    <th scope="col" class="texto-grande">Nombre</th>
+                    <th scope="col" class="texto-grande">Apellido</th>
+                    <th scope="col" class="texto-grande">Rut</th>
+                    <th scope="col" class="texto-grande">Correo</th>
+                    <th scope="col" class="texto-grande">Teléfono</th>
+                    <th scope="col" class="texto-grande">Sectores</th>
+                    <th scope="col" class="texto-grande">Consumo (m3)</th>
+                    <th scope="col" class="texto-grande">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in usuarios %}
+                <tr>
+                    <th scope="row" class="texto-grande">{{ u.numero_medidor }}</th>
+                    <td class="texto-grande">{{ u.nombres }}</td>
+                    <td class="texto-grande">{{ u.apellidos }}</td>
+                    <td class="texto-grande">{{ u.rut }}</td>
+                    <td class="texto-grande">{{ u.email }}</td>
+                    <td class="texto-grande">{{ u.telefono }}</td>
+                    <td class="texto-grande">{{ u.sectores }}</td>
+                    <td class="texto-grande">{{ u.consumo }}</td>
+                    <td>
+                        <div class="btn-container">
+                            {% if user.usuario_tipo == 'administrador' %}
+                                <form action="{% url 'eliminar' u.id %}" method="post" class="delete-form">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="correo" value="{{ u.email }}">
+                                    <button type="button" class="btn btn-danger delete-btn" data-toggle="modal" data-target="#deleteModal_{{ u.id }}">
+                                        Eliminar
+                                    </button>
+                                </form>                                                       
+                            <a href="{% url 'actualizar' u.id %}" class="btn btn-info">
+                                <i class="fas fa-edit"></i> Actualizar
+                            </a>
+                            {% endif %}
+                            {% if user.usuario_tipo == 'operador' %}
+                            <a href="{% url 'agregar_consumo' u.id %}" class="btn btn-info">
+                                <i class="fas fa-edit"></i> Agregar m3
+                            </a>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal para confirmar la eliminación -->
+{% for u in usuarios %}
+<div class="modal fade" id="deleteModal_{{ u.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirmar eliminación</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que deseas eliminar a {{ u.nombres }} {{ u.apellidos }}?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <form action="{% url 'eliminar' u.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="correo" value="{{ u.email }}">
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
+
+
+
+

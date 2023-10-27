@@ -1,0 +1,74 @@
+{% extends 'index_master.html' %}
+
+{% block content %}
+<div class="right_col" role="main">
+    <h1>Agregar Consumo (m3)</h1>
+    <br>
+    <form action="{% url 'agregar_consumo' usuario.id %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group row">
+            <label for="nombre" class="col-4 col-form-label">Nombre</label>
+            <div class="col-8">
+                <input id="nombre" name="nombre" type="text" class="form-control" value="{{ usuario.nombres }}" readonly>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="apellido" class="col-4 col-form-label">Apellido</label>
+            <div class="col-8">
+                <input id="apellido" name="apellido" type="text" class="form-control" value="{{ usuario.apellidos }}" readonly>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="rut" class="col-4 col-form-label">Rut</label>
+            <div class="col-8">
+                <input id="rut" name="rut" type="text" class="form-control" value="{{ usuario.rut }}" readonly>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="correo" class="col-4 col-form-label">Correo</label>
+            <div class="col-8">
+                <input id="correo" name="correo" type="email" class="form-control" value="{{ usuario.email }}" readonly>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="telefono" class="col-4 col-form-label">Telefono</label>
+            <div class="col-8">
+                <input id="telefono" name="telefono" type="number" class="form-control" value="{{ usuario.telefono }}" readonly>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="sectores" class="col-4 col-form-label">Sectores</label>
+            <div class="col-8">
+                <input id="sectores" name="sectores" type="text" class="form-control" value="{{ usuario.sectores }}" readonly>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="numero_medidor" class="col-4 col-form-label">Número de medidor</label>
+            <div class="col-8">
+                <input id="numero_medidor" name="numero_medidor" type="text" class="form-control" value="{{ usuario.numero_medidor }}" readonly>
+            </div>
+        </div>
+        <!-- Nuevo campo "consumo" que el usuario puede editar -->
+        {% if user.usuario_tipo == 'operador' %}
+        <div class="form-group row">
+            <label for="consumo" class="col-4 col-form-label">Consumo (m3)</label>
+            <div class="col-8">
+                <input id="consumo" name="consumo" type="text" class="form-control" value="{{ usuario.consumo }}" required>
+            </div>
+        </div>
+        {% endif %}
+        <!-- Fin del campo "consumo" -->
+
+        <div class="form-group row">
+            <div class="offset-4 col-8">
+                <button name="submit" type="submit" class="btn btn-primary" id="actualizarBtn">
+                    <i class="fa fa-save"></i> Actualizar Cliente
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+

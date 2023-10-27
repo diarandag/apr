@@ -1,0 +1,50 @@
+{% extends '../index_mastercli.html' %}
+
+{% block  content %}
+<style>
+  .table th {
+    border-top: none !important;
+  }
+
+  .texto-grande {
+      font-size: 18px; /* Ajusta el tamaño de fuente según tus preferencias */
+  }
+
+  /* Estilo para el contenedor de la tabla */
+  .table-container {
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 5px;
+      background-color: #fff;
+  }
+</style>
+<div class="right_col" role="main">
+    <h1>Lista de Boletas</h1>
+    <br>
+    <div class="table-container">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col" class="texto-grande">Número de Boleta</th>            
+                <th scope="col" class="texto-grande">Fecha de Vencimiento</th>
+                <th scope="col" class="texto-grande">Estado</th>
+                <th scope="col" class="texto-grande">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>          
+              <tr>
+                <td class="texto-grande">123456789</td>
+                <td class="texto-grande">30/10/2023</td>
+                <td class="texto-grande">Pendiente</td>
+                <td>
+                    <a href="{% url 'generar_boleta_pdf' %}" class="btn btn-primary">Imprimir Boleta</a>
+                    <a href="pagina_de_pago" class="btn btn-success">Pagar Boleta</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+</div>
+{% endblock  %}
+
+

@@ -1,0 +1,128 @@
+{% extends '../index_master.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<div class="right_col" role="main">
+    <div class="content-header">
+        <h1>Centro de Notificaciones</h1>
+        <br>
+        <br>
+        <div class="btn-container">
+            <a href="{% url 'crear_notificacion' %}" class="btn btn-success">
+                <i class="fas fa-plus"></i> Crear Notificación
+            </a>
+        </div>
+    </div>
+    <br>
+    <div class="notificaciones">
+        {% for notificacion in notificaciones %}
+        <div class="notificacion">
+            {% if user.usuario_tipo == 'operador' %}
+                <div class="creador-notificacion">
+                    Enviado por: {{ notificacion.creador }}
+                </div>
+            {% endif %}
+            {% if user.usuario_tipo == 'administrador' %}
+                <button type="button" class="eliminar-btn" data-toggle="modal" data-target="#deleteModal_{{ notificacion.id }}">
+                    Eliminar
+                </button>
+            {% endif %}
+            <h3>{{ notificacion.titulo }}</h3>
+            <p>{{ notificacion.mensaje }}</p>
+            <p class="fecha">{{ notificacion.fecha_envio }}</p>
+        </div>
+        
+        <!-- Modal para confirmar la eliminación de cada notificación -->
+        <div class="modal fade" id="deleteModal_{{ notificacion.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Confirmar eliminación</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Estás seguro de que deseas eliminar esta notificación?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <form method="post" action="{% url 'eliminar_notificacion' notificacion.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .notificaciones {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .notificacion {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+        background: #fff; /* Fondo blanco */
+        position: relative;
+    }
+
+    .eliminar-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #ff0000; /* Color de fondo rojo, puedes personalizarlo */
+        color: #fff; /* Texto en blanco, puedes personalizarlo */
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+    .notificacion h3 {
+        font-size: 24px;
+        margin: 0;
+    }
+
+    .notificacion p {
+        font-size: 18px;
+        margin: 0;
+    }
+
+    .notificacion .fecha {
+        font-size: 12px;
+        color: #888;
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+    }
+
+    .content-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .creador-notificacion {
+        font-size: 12px;
+        color: #888;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+</style>
+{% endblock %}
+
+
+
+
+
+
+
+
+
