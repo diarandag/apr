@@ -77,7 +77,7 @@
     <center><h1>Ingresar RUT</h1></center>
     {% csrf_token %}
     <label for="rut">RUT:</label>
-    <input type="text" id="rut" placeholder="112223334" name="rut" required>
+    <input type="text" id="rut" placeholder="123456789 (sin puntos ni guión)" name="rut" required>
     <button type="submit">Entrar</button>
     <div class="checkbox-container">
       <label><input type="checkbox" checked="checked">Recuérdame</label>
@@ -85,5 +85,18 @@
     </div>
   </div>
 </form>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const rutInput = document.getElementById("rut");
+  
+    rutInput.addEventListener("input", function (event) {
+      // Elimina todos los caracteres que no sean dígitos
+      const inputValue = event.target.value;
+      const rut = inputValue.replace(/\D/g, "");
+      rutInput.value = rut;  // Actualiza el valor del campo solo con números
+    });
+  });
+  </script>
 </body>
 </html>

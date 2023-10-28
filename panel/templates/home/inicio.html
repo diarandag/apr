@@ -207,9 +207,9 @@
 
 <body>
   <header class="header">
-    <a href="#" class="logo">APR</a>
+    <a href="#" class="logo" style="font-size: 30px;">APR</a>
     <nav class="nav-items">
-      <a href="{% url 'login_rut' %}">Inicia Sesión</a>
+      <a href="{% url 'login_rut' %}" style="font-size: 20px;">Inicia Sesión</a>
       <!--
       <a href="#">About</a>
       <a href="#">Contact</a>
@@ -223,46 +223,49 @@
     </div>
     <div class="achievements">
       <div class="work">
-        <i class="fas fa-atom"></i>
-        <p class="work-heading">Projects</p>
-        <p class="work-text">I have worked on many projects and I am very proud of them. I am a very good developer and I am always looking for new projects.</p>
+        <i class="fas fa-newspaper"></i>
+        <p class="work-heading" style="font-size: 30px;">Novedades</p>
+        <p class="work-text" style="font-size: 18px;">Estamos comprometidos en brindarte las últimas novedades y actualizaciones sobre el suministro de agua potable en nuestra comunidad. Mantente informado sobre mejoras, cambios y noticias relevantes para tu hogar.</p>
       </div>
       <div class="work">
-        <i class="fas fa-skiing"></i>
-        <p class="work-heading">Skills</p>
-        <p class="work-text">I have a lot of skills and I am very good at them. I am very good at programming and I am always looking for new skills.</p>
+        <i class="fas fa-shield-alt"></i>
+        <p class="work-heading" style="font-size: 30px;">Seguridad</p>
+        <p class="work-text" style="font-size: 18px;">La seguridad de nuestro suministro de agua es nuestra prioridad. Implementamos medidas sólidas y tecnología avanzada para garantizar la calidad y pureza del agua que llega a tu hogar. Tu bienestar es nuestra responsabilidad.</p>
       </div>
       <div class="work">
-        <i class="fas fa-ethernet"></i>
-        <p class="work-heading">Conexión</p>
-        <p class="work-text">Disponibilidad completa de la página web para que puedas revisar tus boletas e incluso pagar tus pendientes.</p>
+        <i class="fas fa-wifi"></i>
+        <p class="work-heading" style="font-size: 30px;">Conexión</p>
+        <p class="work-text" style="font-size: 18px;">Estamos en constante conexión contigo a través de nuestra página web. Accede a tus boletas, verifica tu consumo y realiza pagos de forma conveniente. Estamos aquí para mantenerte conectado con tus necesidades de agua potable.</p>
       </div>
     </div>
     <div class="about-me">
       <div class="about-me-text">
-        <h2>Sobre nosotros</h2>
-        <p>I am a web developer and I love to create websites. I am a very good developer and I am always looking for new projects. I am a very good developer and I am always looking for new projects.</p>
+        <h2 style="font-size: 40px;">Sobre nosotros</h2> <!-- Aumentar el tamaño de fuente aquí -->
+        <p style="font-size: 18px;">Somos una sucursal de agua potable rural comprometida con el bienestar de nuestra comunidad. Nuestra misión es proporcionar un suministro confiable de agua potable, vital para la vida cotidiana de nuestros residentes. Trabajamos incansablemente para garantizar la calidad y disponibilidad del agua que llega a tus hogares. <br>Tu satisfacción es nuestra prioridad, y estamos aquí para servirte.</p>
       </div>
       <img src="https://www.engie.cl/wp-content/uploads/2020/05/ENGIE-Chile-APR-Yumbel.jpg" alt="me">
     </div>
   </main>
+  
   <footer class="footer">
-    <div class="copy">&copy; MacroActiva Spa</div>
-    <div class="bottom-links">
-      <div class="links">
-        <span>Más información</span>
-        <a href="#">Inicio</a>
-        <a href="#">Sobre nosotros</a>
-        <a href="#">Contáctanos</a>
-      </div>
-      <div class="links">
-        <span>Social Links</span>
-        <a href="#"><i class="fab fa-facebook"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-      </div>
+    <div class="copy">
+        &copy; <a href="https://www.macroactiva.cl/" target="_blank" style="color: white;">MacroActiva Spa</a>
     </div>
-  </footer>
+    <div class="bottom-links">
+        <div class="links">
+            <span>Más información</span>
+            <a href="#">Inicio</a>
+            <a href="#">Sobre nosotros</a>
+            <a href="#">Contáctanos</a>
+        </div>
+        <div class="links">
+            <span>Social Links</span>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+    </div>
+</footer>
 </body>
 
 </html>
